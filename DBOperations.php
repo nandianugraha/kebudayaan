@@ -37,7 +37,7 @@ class DBOperations
 		return $getProvince; 
 	}
 
-	//getaKebudayaan
+	//getdesc
 	public function getDesc(){
 			if (isTheseParametersAvailable(array('id_prov'))) {
 				$id_prov = $_POST['id_prov'];
@@ -68,6 +68,75 @@ class DBOperations
 				array_push($kebudayaan, $temp);
 			}
 			return $kebudayaan; 
+		}
+	}
+
+	//getrumahadat
+	public function getRumahAdat(){
+		if (isTheseParametersAvailable(array('id_prov'))) {
+			$id_prov = $_POST['id_prov'];
+
+			$stmt = $this->con->prepare("SELECT kebudayaan.id_rumah_adat, nama_rumah_adat , desc_rumah_adat, image_rumah_adat, kebudayaan.id_prov FROM kebudayaan INNER JOIN rumah_adat WHERE kebudayaan.id_prov = ?");
+			$stmt->bind_param("s", $id_prov);
+			$stmt->execute();
+			$stmt->bind_result($id_rumah_adat, $nama_rumah_adat, $desc_rumah_adat, $image_rumah_adat, $id_prov);
+			$rumah = array();
+			
+			while($stmt->fetch()){
+				$temp['id_rumah_adat'] = $id_rumah_adat;
+				$temp['id_prov'] = $id_prov;
+				$temp['nama_rumah_adat'] = $nama_rumah_adat;
+				$temp['desc_rumah_adat'] = $desc_rumah_adat; 
+				$temp['image_rumah_adat'] = $image_rumah_adat;
+				array_push($rumah, $temp);
+			}
+			return $rumah; 
+		}
+	}
+
+	//pakaian adat
+	public function getPakaianAdat(){
+		if (isTheseParametersAvailable(array('id_prov'))) {
+			$id_prov = $_POST['id_prov'];
+
+			$stmt = $this->con->prepare("SELECT kebudayaan.id_pakaian_adat, nama_pakaian_adat , desc_pakaian_adat, image_pakaian_adat, kebudayaan.id_prov FROM kebudayaan INNER JOIN pakaian_adat WHERE kebudayaan.id_prov = ?");
+			$stmt->bind_param("s", $id_prov);
+			$stmt->execute();
+			$stmt->bind_result($id_pakaian_adat, $nama_pakaian_adat, $desc_pakaian_adat, $image_pakaian_adat, $id_prov);
+			$pakaian = array();
+			
+			while($stmt->fetch()){
+				$temp['id_pakaian_prov'] = $id_pakaian_adat;
+				$temp['id_prov'] = $id_prov;
+				$temp['nama_pakaian_adat'] = $nama_pakaian_adat;
+				$temp['desc_pakaian_adat'] = $desc_pakaian_adat; 
+				$temp['image_pakaian_adat'] = $image_pakaian_adat;
+				array_push($pakaian, $temp);
+			}
+			return $pakaian; 
+		}
+	}
+
+	//senjata adat
+	public function getSenjataAdat(){
+		if (isTheseParametersAvailable(array('id_prov'))) {
+			$id_prov = $_POST['id_prov'];
+
+			$stmt = $this->con->prepare("SELECT kebudayaan.id_senjata_adat, nama_senjata_adat , desc_senjata_adat, image_senjata_adat, kebudayaan.id_prov FROM kebudayaan INNER JOIN senjata_adat WHERE kebudayaan.id_prov = ?");
+			$stmt->bind_param("s", $id_prov);
+			$stmt->execute();
+			$stmt->bind_result($id_senjata_adat, $nama_senjata_adat, $desc_senjata_adat, $image_senjata_adat, $id_prov);
+			$senjata = array();
+			
+			while($stmt->fetch()){
+				$temp['id_senjata_prov'] = $id_senjata_adat;
+				$temp['id_prov'] = $id_prov;
+				$temp['nama_senjata_adat'] = $nama_senjata_adat;
+				$temp['desc_senjata_adat'] = $desc_senjata_adat; 
+				$temp['image_senjata_adat'] = $image_senjata_adat;
+				array_push($senjata, $temp);
+			}
+			return $senjata; 
 		}
 	}
 

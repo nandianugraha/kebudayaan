@@ -14,7 +14,7 @@
 				isset($_POST['lambang_prov'])){
                     $db = new DBOperations();
 					if($db->addProvinsi($_POST['id_prov'], $_POST['name_prov'], $_POST['lambang_prov'])){
-						$response['status'] = 'sukses';
+						$response['status'] = 'success';
 						$response['code'] = 200;
                         $response['message'] = 'pengaduan added successfully';
 					}else{
@@ -33,12 +33,15 @@
 				$db = new DBOperations();
 				$getProvinsi = $db->getProvinsi();
 				if(count($getProvinsi)<=0){
-					$response['error'] = true; 
+					$response['status'] = 'error'; 
+					$response['code'] = 300;
 					$response['message'] = 'Nothing found in the database';
+					$response['response'] = $getProvinsi;
 				}else{
-					$response['error'] = false; 
-					$response['count'] = count($getProvinsi);
-					$response['data'] = $getProvinsi;
+					$response['status'] = 'success'; 
+					$response['code'] = 200;
+					$response['message'] = 'success load data';
+					$response['response'] = $getProvinsi;
 
 				}
 			break; 
@@ -47,35 +50,74 @@
 				$db = new DBOperations();
 				$desc = $db->getDesc();
 				if(count($desc)<=0){
-					$response['error'] = true;
+					$response['status'] = 'error'; 
+					$response['code'] = 300;
 					$response['message'] = 'Nothing found in the database';
+					$response['response'] = $desc;
 				}else{
-					$response['error'] = false;
-					$response['message'] = 'Sukses';
-					$response['data'] = $desc;
+					$response['status'] = 'success'; 
+					$response['code'] = 200;
+					$response['message'] = 'success load data';
+					$response['response'] = $desc;
 				}
 			break;
 
-			case 'getkategori':
+			case 'getrumahadat':
 				$db = new DBOperations();
-				$kategori = $db->getKategori();
-				if(count($kategori)<=0){
-					$response['error'] = true;
+				$rumah = $db->getRumahAdat();
+				if(count($rumah)<=0){
+					$response['status'] = 'error'; 
+					$response['code'] = 300;
 					$response['message'] = 'Nothing found in the database';
+					$response['response'] = $rumah;
 				}else{
-					$response['error'] = false;
-					$response['data'] = $kategori;
+					$response['status'] = 'success'; 
+					$response['code'] = 200;
+					$response['message'] = 'success load data';
+					$response['response'] = $rumah;
 				}
-            break;
-            
+			break;
+			
+			case 'getpakaianadat':
+				$db = new DBOperations();
+				$pakaian = $db->getPakaianAdat();
+				if(count($pakaian)<=0){
+					$response['status'] = 'error'; 
+					$response['code'] = 300;
+					$response['message'] = 'Nothing found in the database';
+					$response['response'] = $pakaian;
+				}else{
+					$response['status'] = 'success'; 
+					$response['code'] = 200;
+					$response['message'] = 'success load data';
+					$response['response'] = $pakaian;
+				}
+			break;
+			
+			case 'getsenjataadat':
+				$db = new DBOperations();
+				$senjata = $db->getSenjataAdat();
+				if(count($senjata)<=0){
+					$response['status'] = 'error'; 
+					$response['code'] = 300;
+					$response['message'] = 'Nothing found in the database';
+					$response['response'] = $senjata;
+				}else{
+					$response['status'] = 'success'; 
+					$response['code'] = 200;
+					$response['message'] = 'success load data';
+					$response['response'] = $senjata;
+				}
+			break;
+			
             default:
-				$response['error'] = true;
+				$response['code'] = 500;
 				$response['message'] = 'No operation to perform';
 			
 		}
 		
 	}else{
-		$response['error'] = false; 
+		$response['code'] = 200;
 		$response['message'] = 'Invalid Request';
 	}
 	
